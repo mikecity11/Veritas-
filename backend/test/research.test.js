@@ -1,0 +1,3 @@
+import test from 'node:test'; import assert from 'node:assert/strict'; import { research } from '../src/research.js';
+test('creates a stable verification record from sources',async()=>{const adapters={wikipedia:async()=>[{title:'One',url:'https://x.test/1',kind:'Overview',excerpt:'A'}],crossref:async()=>[{title:'Two',url:'https://x.test/2',kind:'Record',excerpt:'B'}]};const a=await research('Does this work?',adapters);const b=await research('Does this work?',adapters);assert.equal(a.sources.length,2);assert.equal(a.verificationId,b.verificationId);assert.match(a.verificationId,/^sha256:/)});
+test('rejects empty questions',()=>assert.rejects(()=>research('')));
